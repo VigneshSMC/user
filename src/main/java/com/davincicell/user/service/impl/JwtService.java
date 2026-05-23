@@ -28,10 +28,10 @@ public class JwtService {
         return !claims.getExpiration().before(new Date());
     }
 
-    public String buildToken(User user) {
+    public String buildToken(String email) {
         return Jwts
                 .builder()
-                .setSubject(user.getEmail())
+                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)

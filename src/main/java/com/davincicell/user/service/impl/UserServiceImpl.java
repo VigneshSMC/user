@@ -4,6 +4,7 @@ import com.davincicell.user.entity.UserData;
 import com.davincicell.user.exception.UserExistsException;
 import com.davincicell.user.model.User;
 import com.davincicell.user.repo.UserRepo;
+import com.davincicell.user.request.LoginRequest;
 import com.davincicell.user.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,10 +40,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String verify(User user) {
-        Authentication authenticate = manager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+    public String verify(LoginRequest user) {
+        Authentication authenticate = manager.authenticate(new UsernamePasswordAuthenticationToken(user.email(), user.password()));
         if (authenticate.isAuthenticated()) {
-            return jwt.buildToken(user);
+            return jwt.buildToken(user.email());
         }
         else return "Fail";
     }
