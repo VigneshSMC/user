@@ -2,6 +2,7 @@ package com.davincicell.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,10 @@ public class UserData implements UserDetails {
 
     private String username;
     private String password;
+
+    @Getter
+    @Column(unique=true)
+    private String email;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

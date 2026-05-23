@@ -1,5 +1,6 @@
 package com.davincicell.user.service.impl;
 
+import com.davincicell.user.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,15 +23,15 @@ public class JwtService {
     private long expiration;
 
 
-    public boolean valid(String token, UserDetails details) {
+    public boolean valid(String token) {
         Claims claims = extractClaims(token);
-        return claims.getSubject().equals(details.getUsername()) && !claims.getExpiration().before(new Date());
+        return !claims.getExpiration().before(new Date());
     }
 
-    public String buildToken(UserDetails userdetails) {
+    public String buildToken(User user) {
         return Jwts
                 .builder()
-                .setSubject(userdetails.getUsername())
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)

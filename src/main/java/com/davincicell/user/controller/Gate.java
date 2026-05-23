@@ -2,9 +2,9 @@ package com.davincicell.user.controller;
 
 import com.davincicell.user.model.User;
 import com.davincicell.user.service.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,10 +27,5 @@ public class Gate {
     @PostMapping("/auth/login")
     public ResponseEntity<String> login(@RequestBody User user) {
         return new ResponseEntity<>(userservice.verify(user), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/getData")
-    public String getData() {
-        return "HAHA";
     }
 }
